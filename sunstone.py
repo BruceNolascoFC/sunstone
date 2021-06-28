@@ -5,6 +5,9 @@ import scipy as sci
 import scipy.linalg as lin
 
 class Jones:
+    """
+    Class for Jones vector support. The entries of the vector are complex numbers in general. When casting to Stokes vectors type warnings are suppresed. The notation convention follows as Goldstein's *Polarized Light*.
+    """
     def __init__(self,x=0,y=0,d=None):
         if d==None:
             self.x = x
@@ -19,6 +22,9 @@ class Jones:
         delta = aux[1]-aux[0]
         return delta
     def wolf(self):
+        """
+        Calculates the Wolf coherency matrix of the Jones vector.
+        """
         return np.outer(self.data,np.conj(self.data))
     def stokes(self):
         x = self.x
@@ -26,6 +32,8 @@ class Jones:
         xc = np.conj(x)
         yc = np.conj(y)
         with warnings.catch_warnings():
+            # Casting complex numbers to float raises a warning
+            # we supress these
             warnings.simplefilter("ignore")
             s0 = float(x*xc + y*yc)
             s1 = float(x*xc - y*yc)
@@ -34,7 +42,20 @@ class Jones:
         return Stokes(s0,s1,s2,s3)
 
 class Stokes:
+    """
+    Class for Stokes vector support. The vector consist of 4 real numbers. Unphysical Stokes vector are allowed however their creation rises a type warning. Operations involving pure polarization states will use only the pure component of the current Stokes vector. Calling these methods on totally unpolarized light ( :math:`S = (1,0,0,0)`) will raise a type warning and nullify the output.
+    """
     def __init__(self,s0 = 0,s1 = 0,s2= 0,s3 =0,d = None):
+        """
+        Builds a Stokes vector given each of its components `s0`,`s1`,`s2`,`s3` or an (,4) array `d`. Non-physical values 
+
+        Args:
+            s0 (float , optional): First component of the stokes vector. Defaults to 0.
+            s1 (float , optional): Second component of the stokes vector. Defaults to 0.
+            s2 (float , optional): Third component of the stokes vector. Defaults to 0.
+            s3 (float , optional): Fourth component of the stokes vector. Defaults to 0.
+            d ((,4) array, optional): Array with the Stokes vector entries. Defaults to None.
+        """
         if d == None:
             self.s0 = s0
             self.s1 = s1
@@ -70,11 +91,23 @@ class Stokes:
     def dp(self):
         return self.znorm / self.s0
     def chi(self):
+        """
+        Calculates the orientation angle of the polarization ellipse.
+
+        Returns:
+            float: The orientation angle in radians.
+        """
         if not self.is_pure():
             return self.pure().chi()
         else:
             return np.arcsin(self.s3/self.s0)/2.
     def psi(self):
+        """
+        Calculates the ellipticity angle of the polarization angle of the polarization ellipse.
+
+        Returns:
+            float: The ellipticity angle.
+        """
         if not self.is_pure():
             return self.pure().psi()
         else:
@@ -118,6 +151,9 @@ class Stokes:
         return Stokes(d = a*self.data)
 
 class Muller:
+    """
+    The base class for Müller matrices. The underlying 4x4 matrix is kept under the attribute ``data``. 
+    """
     def __init__(self,data):
         self.data = np.array(data)
         if(data.shape != (4,4)):
@@ -125,7 +161,12 @@ class Muller:
     def eig(self):
         return lin.eig(self.data)
     def physical(self):
-        pass
+        e = self.eig()
+        # We get the maximum eigenvalue and the
+        # associated eigenvector
+        am = np.argmax(e[0])
+        maxev = e[0][am]
+        maxevec = e[1][am]
     def __call__(self, s: Stokes)-> Stokes:
         a = self.data @ s.data
         return Stokes(d = a)
@@ -155,10 +196,12 @@ def plot_poincare(a):
     ax.set_zlabel("$S_3$")
     ax.plot_wireframe(x, y, z,linewidth=0.1)
     try:
+        # if we are given a list argument we plot each vector
         for s in a:
             vec = s.poincare()
             ax.quiver([0],[0],[0],[vec[0]],[vec[1]],[vec[2]])
     except TypeError:
+        # otherwise plot the single vector
         vec = a.poincare()
         ax.quiver([0],[0],[0],[vec[0]],[vec[1]],[vec[2]])
     plt.show()
