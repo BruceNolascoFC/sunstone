@@ -14,7 +14,7 @@ Sunstone is a python3 module designed to aid in Müller polarimetry with focus o
 
 .. automodule:: sunstone
    :members:
-
+   
 Indices and tables
 ==================
 
