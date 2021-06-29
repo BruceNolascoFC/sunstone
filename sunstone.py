@@ -18,15 +18,27 @@ class Jones:
             self.y = d[1]
             self.data = np.array(d)
     def delta(self):
+        """Calculates relative phase diffrence between vertical and horizontal components.
+
+        :return: Delta angle.
+        :rtype: float
+        """
         aux = np.angle(self.data)
         delta = aux[1]-aux[0]
         return delta
     def wolf(self):
-        """
-        Calculates the Wolf coherency matrix of the Jones vector.
+        """Calculates the Wolf coherency matrix.
+
+        :return: Wolf matrix.
+        :rtype: (2,2) array
         """
         return np.outer(self.data,np.conj(self.data))
     def stokes(self):
+        """Converts the Jones vector to a Stokes vector.
+
+        :return: Corresponding Stokes vector.
+        :rtype: Stokes
+        """
         x = self.x
         y = self.y
         xc = np.conj(x)
@@ -44,31 +56,37 @@ class Jones:
 class Stokes:
     """
     Class for Stokes vector support. The vector consist of 4 real numbers. Unphysical Stokes vector are allowed however their creation rises a type warning. Operations involving pure polarization states will use only the pure component of the current Stokes vector. Calling these methods on totally unpolarized light ( :math:`S = (1,0,0,0)`) will raise a type warning and nullify the output.
+
+    Builds a Stokes vector given each of its components `s0`,`s1`,`s2`,`s3` or an (,4) array `d`. 
+
+    :param s0: First component of the stokes vector, defaults to 0
+    :type s0: float, optional
+    :param s1: Second component of the stokes vector, defaults to 0
+    :type s1: float, optional
+    :param s2: Third component of the stokes vector, defaults to 0
+    :type s2: float, optional
+    :param s3: Fourth component of the stokes vector, defaults to 0
+    :type s3: float, optional
+    :param d: Array with the components of the Stokes vector, defaults to None
+    :type d: array, optional
+
+    :return: Stokes vector.
+    :rtype: Stokes
     """
     def __init__(self,s0 = 0,s1 = 0,s2= 0,s3 =0,d = None):
-        """
-        Builds a Stokes vector given each of its components `s0`,`s1`,`s2`,`s3` or an (,4) array `d`. Non-physical values 
-
-        Args:
-            s0 (float , optional): First component of the stokes vector. Defaults to 0.
-            s1 (float , optional): Second component of the stokes vector. Defaults to 0.
-            s2 (float , optional): Third component of the stokes vector. Defaults to 0.
-            s3 (float , optional): Fourth component of the stokes vector. Defaults to 0.
-            d ((,4) array, optional): Array with the Stokes vector entries. Defaults to None.
-        """
         if d == None:
             self.s0 = s0
             self.s1 = s1
             self.s2 = s2
             self.s3 = s3
 
-            self.data = np.array([s0,s1,s2,s3])
+            self.d = np.array([s0,s1,s2,s3])
         else:
             self.s0 = d[0]
             self.s1 = d[1]
             self.s2 = d[2]
             self.s3 = d[3]
-            self.data = d
+            self.d = d
         if self.s0 <= 0:
             warnings.warn("Non-physical Stokes vector (Null or negative intensity).")
         self.z = np.array([s1,s2,s3])
@@ -80,6 +98,12 @@ class Stokes:
     def is_pure(self):
         return self.mnorm == 0
     def pure(self):
+        """Gets the pure polarization component of the vector.
+        Raises a warning if the vector is totally unpolarized.
+
+        :return: Pure polarization state Stokes vector.
+        :rtype: Stokes
+        """
         if self.znorm == 0:
                 warnings.warn("Cannot purify totally unpolarized Stokes vector.")
                 return self
@@ -89,13 +113,18 @@ class Stokes:
         else:
             return self
     def dp(self):
+        """Calculates the degree of polarization.
+
+        :return: Degree of polarization.
+        :rtype: float
+        """
         return self.znorm / self.s0
     def chi(self):
         """
         Calculates the orientation angle of the polarization ellipse.
 
-        Returns:
-            float: The orientation angle in radians.
+        :return: The orientation angle in radians.
+        :rtype: float
         """
         if not self.is_pure():
             return self.pure().chi()
@@ -113,15 +142,33 @@ class Stokes:
         else:
             return np.arctan2(self.s2,self.s1)/2.
     def delta(self):
+        """Relative phase difference of the pure component.
+
+        :return: Phase difference.
+        :rtype: Float
+        """
         if not self.is_pure():
             return self.pure().delta()
         else:
             return np.arctan2(self.s3,self.s2)
-    def poincare(self):
-        return np.array([np.cos(2*self.chi())*np.cos(2*self.psi()),
+    def poincare(self,unit = False):
+        """
+        Gets the coordinates of the Poincaré sphere represemtation of the Sokes vector.
+
+        :param unit: Wether or not normalize the output vector. Defaults to true.
+        :type unit: Boolean,optional.
+        :return: [description]
+        :rtype: [type]
+        """
+        n = 1
+        if not unit:
+            n=self.s0
+        return n*np.array([np.cos(2*self.chi())*np.cos(2*self.psi()),
             np.cos(2*self.chi())*np.sin(2*self.chi()),
             np.sin(2*self.chi())])
     def plot_poincare(self):
+        """Makes a 3d plot of the Stokes vector representation in the Poincaré sphere.
+        """
         vec = self.poincare()
         # We draw the sphere on 3d axes
         fig = plt.figure()
@@ -144,11 +191,11 @@ class Stokes:
         plt.show()
 
     def __add__(self, a):
-        return Stokes(d = a.data + self.data)
+        return Stokes(d = a.d + self.d)
     def __sub__(self, a):
-        return Stokes(d = a.data - self.data)
+        return Stokes(d = a.d - self.d)
     def __mul__(self, a):
-        return Stokes(d = a*self.data)
+        return Stokes(d = a*self.d)
 
 class Muller:
     """

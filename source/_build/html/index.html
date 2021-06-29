@@ -42,9 +42,45 @@
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Jones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Jones" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for Jones vector support. The entries of the vector are complex numbers in general. When casting to Stokes vectors type warnings are suppresed. The notation convention follows as Goldstein’s <em>Polarized Light</em>.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Jones.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Jones.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates relative phase diffrence between vertical and horizontal components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Delta angle.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Jones.stokes">
+<span class="sig-name descname"><span class="pre">stokes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Jones.stokes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the Jones vector to a Stokes vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Corresponding Stokes vector.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#sunstone.Stokes" title="sunstone.Stokes">Stokes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sunstone.Jones.wolf">
 <span class="sig-name descname"><span class="pre">wolf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Jones.wolf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the Wolf coherency matrix of the Jones vector.</p>
+<dd><p>Calculates the Wolf coherency matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Wolf matrix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>(2,2) array</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -59,12 +95,48 @@
 <dt class="sig sig-object py" id="sunstone.Stokes">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Stokes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for Stokes vector support. The vector consist of 4 real numbers. Unphysical Stokes vector are allowed however their creation rises a type warning. Operations involving pure polarization states will use only the pure component of the current Stokes vector. Calling these methods on totally unpolarized light ( <span class="math notranslate nohighlight">\(S = (1,0,0,0)\)</span>) will raise a type warning and nullify the output.</p>
+<p>Builds a Stokes vector given each of its components <cite>s0</cite>,`s1`,`s2`,`s3` or an (,4) array <cite>d</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s0</strong> (<em>float</em><em>, </em><em>optional</em>) – First component of the stokes vector, defaults to 0</p></li>
+<li><p><strong>s1</strong> (<em>float</em><em>, </em><em>optional</em>) – Second component of the stokes vector, defaults to 0</p></li>
+<li><p><strong>s2</strong> (<em>float</em><em>, </em><em>optional</em>) – Third component of the stokes vector, defaults to 0</p></li>
+<li><p><strong>s3</strong> (<em>float</em><em>, </em><em>optional</em>) – Fourth component of the stokes vector, defaults to 0</p></li>
+<li><p><strong>d</strong> (<em>array</em><em>, </em><em>optional</em>) – Array with the components of the Stokes vector, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stokes vector.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Stokes" title="sunstone.Stokes">Stokes</a></p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="sunstone.Stokes.chi">
 <span class="sig-name descname"><span class="pre">chi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.chi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the orientation angle of the polarization ellipse.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>float: The orientation angle in radians.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The orientation angle in radians.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Stokes.dp">
+<span class="sig-name descname"><span class="pre">dp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.dp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the degree of polarization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Degree of polarization.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
