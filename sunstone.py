@@ -208,6 +208,8 @@ class Muller:
     def eig(self):
         return lin.eig(self.data)
     def physical(self):
+        """Implements physicality criterion for the Müller matrix. [TODO]
+        """
         e = self.eig()
         # We get the maximum eigenvalue and the
         # associated eigenvector
