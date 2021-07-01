@@ -89,6 +89,12 @@
 <dt class="sig sig-object py" id="sunstone.Muller">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Muller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Muller" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base class for Müller matrices. The underlying 4x4 matrix is kept under the attribute <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Muller.physical">
+<span class="sig-name descname"><span class="pre">physical</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Muller.physical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements physicality criterion for the Müller matrix. [TODO]</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -128,6 +134,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Stokes.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative phase difference of the pure component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Phase difference.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sunstone.Stokes.dp">
 <span class="sig-name descname"><span class="pre">dp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.dp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the degree of polarization.</p>
@@ -142,11 +162,49 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Stokes.plot_poincare">
+<span class="sig-name descname"><span class="pre">plot_poincare</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.plot_poincare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a 3d plot of the Stokes vector representation in the Poincaré sphere.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Stokes.poincare">
+<span class="sig-name descname"><span class="pre">poincare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.poincare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the coordinates of the Poincaré sphere represemtation of the Sokes vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>unit</strong> (<em>Boolean</em><em>,</em><em>optional.</em>) – Wether or not normalize the output vector. Defaults to true.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>[type]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sunstone.Stokes.psi">
 <span class="sig-name descname"><span class="pre">psi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.psi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the ellipticity angle of the polarization angle of the polarization ellipse.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>float: The ellipticity angle.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sunstone.Stokes.pure">
+<span class="sig-name descname"><span class="pre">pure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes.pure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the pure polarization component of the vector.
+Raises a warning if the vector is totally unpolarized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pure polarization state Stokes vector.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#sunstone.Stokes" title="sunstone.Stokes">Stokes</a></p>
 </dd>
 </dl>
 </dd></dl>
