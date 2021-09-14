@@ -196,31 +196,122 @@ class Stokes:
         return Stokes(d = a.d - self.d)
     def __mul__(self, a):
         return Stokes(d = a*self.d)
+    def dot(self,s):
+        return np.dot(self.d,s.d)
+
+def lhp(I = 1.):
+    """
+    Linear horizontal polarized light of intensity I.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :return: Stokes vector of lhp.
+    :rtype: Stokes
+    """
+    return Stokes(I,I,0,0)
+
+def lvp(I = 1.):
+    """
+    Linear vertical polarized light of intensity I.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :return: Stokes vector of lhp.
+    :rtype: Stokes
+    """
+    return Stokes(I,-I,0,0)
+
+def ldpp(I = 1.):
+    """
+    Linear 45° polarized light of intensity I.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :return: Stokes vector of lhp.
+    :rtype: Stokes
+    """
+    return Stokes(I,0,I,0)
+
+def ldmp(I = 1.):
+    """
+    Linear -45° polarized light of intensity I.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :return: Stokes vector of ldmp.
+    :rtype: Stokes
+    """
+    return Stokes(I,0,-I,0)
+
+def rcp(I = 1.):
+    """
+    Right circular polarized light of intensity I.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :return: Stokes vector of rcp.
+    :rtype: Stokes
+    """
+    return Stokes(I,0,0,I)
+
+def lcp(I = 1.):
+    """
+    Left circular polarized light of intensity I.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :return: Stokes vector of lcp.
+    :rtype: Stokes
+    """
+    return Stokes(I,0,0,-I)
+
+def langlep(I = 1.,alpha = 0.):
+    """
+    Linear polarized light of intensity I
+    woth auxiliary angle alpha.
+
+    :param I: intensity, defaults to 1
+    :type I: float, optional
+    :param alpha: auxiliary angle, defaults to  0
+    :type alpha: float, optional
+    :return: Stokes vector of rcp.
+    :rtype: Stokes
+    """
+    return Stokes(I,np.cos(2*alpha),np.sin(2*alpha),0)
+
 
 class Muller:
     """
-    The base class for Müller matrices. The underlying 4x4 matrix is kept under the attribute ``data``. 
+    The base class for Müller matrices. The underlying 4x4 matrix is kept under the attribute ``d``. 
     """
-    def __init__(self,data):
-        self.data = np.array(data)
-        if(data.shape != (4,4)):
+    def __init__(self,d):
+        self.d = np.array(d)
+        if(d.shape != (4,4)):
             warnings.warn("Muller matrix doesn't have the correct dimensions.")
     def eig(self):
-        return lin.eig(self.data)
+        return lin.eig(self.d)
     def physical(self):
-        """Implements physicality criterion for the Müller matrix. [TODO]
+        """Tests whether or not the matrix is physical. It uses the real maximum eigenvalue critierion.
+
+        :return: p
+        :rtype: boolean
         """
-        e = self.eig()
+        values,vectors = lin.eig(Gmat@self.d.T@Gmat@self.d)
+        # Verify that the eigenvalues are real
+        if not np.isreal(values).all():
+            return False
         # We get the maximum eigenvalue and the
         # associated eigenvector
-        am = np.argmax(e[0])
-        maxev = e[0][am]
-        maxevec = e[1][am]
+        maxi = np.argmax(values)
+        maxval = values[maxi]
+        maxvec = (vectors.T)[:,maxi]
+        return maxvec[0]**2>=np.sum(maxvec[1:]**2)
+
     def __call__(self, s: Stokes)-> Stokes:
-        a = self.data @ s.data
+        a = self.data @ s.data.T
         return Stokes(d = a)
     def __matmul__(self, s):
-        a = self.data @ s
+        a = self.d @ s.d
         return None
 
 Gmat = np.eye(4)
@@ -254,3 +345,81 @@ def plot_poincare(a):
         vec = a.poincare()
         ax.quiver([0],[0],[0],[vec[0]],[vec[1]],[vec[2]])
     plt.show()
+
+def LinearPolarizer(gamma = 0,p=1):
+    """Matriz de Muller de polarizacion lineal con orientacion gamma y transmitancia maxima p.
+
+    :param gamma: Orientacion del eje de polarizacion.
+    :type gamma: float, opitional
+    :param p: Transmitancia en eje de polarizacion, defaults to 1
+    :type p: float, optional
+    :return: Matriz de Muller de polarizador lineal.
+    :rtype: Muller
+    """
+    d = np.array([ 
+        [1,np.cos(2*gamma),0,0],
+        [np.cos(2*gamma),1,0,0],
+        [0,0,np.sin(2*gamma),0],
+        [0,0,0,np.sin(2*gamma)]
+    ])
+    return Muller(d= (p**2)*d/2.)
+
+def Retarder(phi = 0.):
+    """
+    Muller matrix of retarder element.
+
+    :param phi: Phase delay, defaults to 0
+    :type phi: float, optional
+    :return: muller matrix.
+    :rtype: Muller
+    """
+    d = np.array([ 
+        [1,0,0,0],
+        [0,1,0,0],
+        [0,0,np.cos(phi),np.sin(phi)],
+        [0,0,-np.sin(phi),np.cos(phi)]
+    ])
+    return Muller(d= d)
+
+def Rotator(theta = 0.):
+    """
+    Muller matrix of a rotator element.
+
+    :param theta: Angle of rotation, defaults to 0
+    :type theta: float, optional
+    :return: muller matrix.
+    :rtype: Muller
+    """
+    d = np.array([ 
+        [1,0,0,0],
+        [0,np.cos(2*theta),np.sin(2*theta),0],
+        [0,-np.sin(2*theta),np.cos(2*theta),0],
+        [0,0,0,1]
+    ])
+    return Muller(d= d)
+
+def analyzer(gamma = 0.,phi =0.):
+    """Muller matrix of analyzer.
+
+    :param gamma: orientation of polarizer's axis, defaults to 0.
+    :type gamma: float, optional
+    :param phi: phase delay, defaults to 0.
+    :type phi: float, optional
+
+    :return: Muller matrix of analyzer.
+    :rtype: Muller
+    """
+    return LinearPolarizer(gamma)@Retarder(phi)
+
+def generator(gamma = 0.,phi =0.):
+    """Muller matrix of generator.
+
+    :param gamma: orientation of polarizer's axis, defaults to 0.
+    :type gamma: float, optional
+    :param phi: phase delay, defaults to 0.
+    :type phi: float, optional
+
+    :return: Muller matrix of generator
+    :rtype: Muller
+    """
+    return Retarder(phi)@LinearPolarizer(gamma)
