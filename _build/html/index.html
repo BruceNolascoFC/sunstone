@@ -37,7 +37,49 @@
 <div class="toctree-wrapper compound">
 </div>
 <p>Sunstone is a python3 module designed to aid in Müller polarimetry with focus on analysis of biological samples. The base module <code class="docutils literal notranslate"><span class="pre">sunstone</span></code> provides the classes <code class="docutils literal notranslate"><span class="pre">Jones</span></code> (Jone’s vectors), <code class="docutils literal notranslate"><span class="pre">Stokes</span></code> (Stokes vectors) and <code class="docutils literal notranslate"><span class="pre">Muller</span></code> (Müller matrices).</p>
-<span class="target" id="module-sunstone"></span><dl class="py class">
+<span class="target" id="module-sunstone"></span><dl class="py function">
+<dt class="sig sig-object py" id="sunstone.Analyzer">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Analyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Analyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Muller matrix of analyzer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<em>float</em><em>, </em><em>optional</em>) – orientation of polarizer’s axis, defaults to 0.</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em>, </em><em>optional</em>) – phase delay, defaults to 0.</p></li>
+<li><p><strong>fa</strong> (<em>float</em><em>, </em><em>optional</em>) – Angle of the fast axis, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Muller matrix of analyzer.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Muller" title="sunstone.Muller">Muller</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sunstone.Generator">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Muller matrix of generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<em>float</em><em>, </em><em>optional</em>) – orientation of polarizer’s axis, defaults to 0.</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em>, </em><em>optional</em>) – phase delay, defaults to 0.</p></li>
+<li><p><strong>fa</strong> (<em>float</em><em>, </em><em>optional</em>) – Angle of the fast axis, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Muller matrix of generator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Muller" title="sunstone.Muller">Muller</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="sunstone.Jones">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Jones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Jones" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for Jones vector support. The entries of the vector are complex numbers in general. When casting to Stokes vectors type warnings are suppresed. The notation convention follows as Goldstein’s <em>Polarized Light</em>.</p>
@@ -85,6 +127,17 @@
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="sunstone.LuChipman">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">LuChipman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.LuChipman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses Lu-Chipman Decomposition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>M</strong> (<a class="reference internal" href="#sunstone.Muller" title="sunstone.Muller"><em>Muller</em></a>) – Muller matrix to decompose.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="sunstone.Muller">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Muller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Muller" title="Permalink to this definition">¶</a></dt>
@@ -92,14 +145,78 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="sunstone.Muller.physical">
 <span class="sig-name descname"><span class="pre">physical</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Muller.physical" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements physicality criterion for the Müller matrix. [TODO]</p>
+<dd><p>Tests whether or not the matrix is physical. It uses the real maximum eigenvalue critierion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>p</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>boolean</p>
+</dd>
+</dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sunstone.Polarizer">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Polarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Polarizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Muller matrix of linear polarizer at gamma angle.
+gamma = 0 indicates a horizontal polarizer,while 
+gamma = pi/2 indicates a vertical polarizer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gamma</strong> (<em>float</em><em>, </em><em>opitional</em>) – Orientacion del eje de polarizacion.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Matriz de Muller de polarizador lineal.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Muller" title="sunstone.Muller">Muller</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sunstone.Retarder">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Retarder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Retarder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Muller matrix of retarder element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em>, </em><em>optional</em>) – Phase delay, defaults to 0</p></li>
+<li><p><strong>fa</strong> (<em>float</em><em>, </em><em>optional</em>) – Angle of the fast axis, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>muller matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Muller" title="sunstone.Muller">Muller</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sunstone.Rotator">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Rotator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Rotator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Muller matrix of a rotator element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>theta</strong> (<em>float</em><em>, </em><em>optional</em>) – Angle of rotation, defaults to 0</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>muller matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Muller" title="sunstone.Muller">Muller</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sunstone.Stokes">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Stokes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">Stokes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.Stokes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for Stokes vector support. The vector consist of 4 real numbers. Unphysical Stokes vector are allowed however their creation rises a type warning. Operations involving pure polarization states will use only the pure component of the current Stokes vector. Calling these methods on totally unpolarized light ( <span class="math notranslate nohighlight">\(S = (1,0,0,0)\)</span>) will raise a type warning and nullify the output.</p>
 <p>Builds a Stokes vector given each of its components <cite>s0</cite>,`s1`,`s2`,`s3` or an (,4) array <cite>d</cite>.</p>
 <dl class="field-list simple">
@@ -327,6 +444,23 @@ woth auxiliary angle alpha.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Stokes vector of rcp.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sunstone.Stokes" title="sunstone.Stokes">Stokes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sunstone.unpol">
+<span class="sig-prename descclassname"><span class="pre">sunstone.</span></span><span class="sig-name descname"><span class="pre">unpol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">I</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sunstone.unpol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpolarized light of intensity I.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>I</strong> (<em>float</em><em>, </em><em>optional</em>) – intensity, defaults to 1</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stokes vector of unpolarized light.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#sunstone.Stokes" title="sunstone.Stokes">Stokes</a></p>
